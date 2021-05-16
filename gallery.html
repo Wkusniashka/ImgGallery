@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Title</title>
+    <script src="jquery.min.js"></script>
+    <style>
+        body {
+            background-image: url("./img/11b6769c8f2ea91b25fa0bb10bcaf4ab.jpg");
+        }
+
+        #container{
+            margin: 20px auto;
+            width: 70%;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
+            border-radius: 5px;
+        }
+
+        #big {
+            display: flex;
+        }
+
+        .imgBox img {
+            padding: 10px;
+            width: 100%;
+            border-radius: 13px;
+            margin: auto;
+        }
+
+        .imgBox {
+            width: 580px;
+            height: 430px;
+            margin: 0 auto;
+        }
+
+        #small {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .smImgBox {
+            width: 210px;
+            height: 115px;
+            margin: 10px;
+        }
+
+        #small img {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        #small img:hover {
+            transform: scale(1.1);
+            transition: scale 0.5s;
+        }
+
+        hr {
+            width: 90%;
+        }
+
+        .arrow {
+            width: 50px;
+            height: 50px;
+            align-self: center;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .arrow img {
+            display: block;
+            margin: 20% auto;
+            width: 60%;
+        }
+
+        #leftArrow {
+            transform: rotate(180deg);
+        }
+
+        .arrow:hover {
+            transform: scale(1.3);
+            transition: scale 0.3s;
+            outline: 3px solid rgba(255, 255, 255, 0.7);
+            background-color: rgba(255, 255, 255, 0.2);
+
+        }
+        .active {
+            transform: scale(1.1);
+            transition: scale 0.5s;
+            outline: 3px solid rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="big">
+            <div class="arrow">
+                <img src="img/arrow-right-01-512.png" id="leftArrow">
+            </div>
+            <div class="imgBox">
+                <img src="./img/anthony-delanoix-CFi7_hCXecU-unsplash.jpg">
+            </div>
+            <div class="arrow">
+                <img src="img/arrow-right-01-512.png" id="rightArrow">
+            </div>
+        </div>
+        <hr>
+        <div id="small">
+            <div class="smImgBox">
+                <img src="./img/bruno-martins-DrhYt-kAe9s-unsplash.jpg">
+            </div>
+            <div class="smImgBox">
+                <img src="./img/lea-fabienne--KzcQ05W3ss-unsplash.jpg">
+            </div>
+            <div class="smImgBox">
+                <img src="./img/claudio-testa-iqeG5xA96M4-unsplash.jpg">
+            </div>
+            <div class="smImgBox">
+                <img src="./img/anthony-delanoix-CFi7_hCXecU-unsplash.jpg" class="active">
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    let numberOfPic = 4;
+    let currentIndex = numberOfPic;
+    $('#small img').click(function() {
+        for (let i = 1; i <= numberOfPic; i++) {
+            let imgSrc = $(`#small div:nth-child(${i}) img`).attr('src');
+            if (imgSrc === $('.imgBox img').attr('src')) {
+                $(`#small div:nth-child(${i}) img`).removeClass('active');
+            }
+        }
+        $('.imgBox img').attr('src', $(this).attr('src'));
+        for (let i = 1; i <= numberOfPic; i++) {
+            if ($(this).attr('src') === $(`#small div:nth-child(${i}) img`).attr("src")) {
+                currentIndex = i;
+            }
+        }
+        $(this).addClass("active");
+
+    });
+
+    $("#rightArrow").click(function() {
+        let prevImg = $(`#small div:nth-child(${currentIndex}) img`);
+        prevImg.removeClass('active');
+        currentIndex++;
+        if (currentIndex > numberOfPic) {
+            currentIndex = 1;
+        }
+        let currentImg = $(`#small div:nth-child(${currentIndex}) img`);
+        $('.imgBox img').attr('src', currentImg.attr('src'));
+        currentImg.addClass('active');
+    });
+
+    $("#leftArrow").click(function() {
+        let currentImg = $(`#small div:nth-child(${currentIndex}) img`);
+        currentImg.removeClass("active");
+        currentIndex--;
+        if (currentIndex < 1) {
+            currentIndex = numberOfPic;
+        }
+        let prevImg = $(`#small div:nth-child(${currentIndex}) img`);
+        $('.imgBox img').attr('src', prevImg.attr('src'));
+        prevImg.addClass("active");
+    })
+</script>
+</html>
